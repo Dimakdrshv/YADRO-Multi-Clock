@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceRoot}/build/app/base_project.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "openocd",
+            "svdFile": "${workspaceRoot}/.vscode/mik32v2.svd",
+            "gdbPath": "${env:MIK32_TOOLCHAIN_DIR}/riscv-none-elf-gdb-py3",
+            "configFiles": [
+                "${env:MIK32_UPLOADER_DIR}/openocd-scripts/interface/ftdi/mikron-link.cfg",
+                "${env:MIK32_UPLOADER_DIR}/openocd-scripts/target/mik32.cfg"
+            ],
+            "overrideLaunchCommands": [
+                "monitor reset halt",
+                "set mem inaccessible-by-default off",
+                "mem 0x01000000 0x01002000 ro",
+                "mem 0x80000000 0xffffffff ro",
+                "set arch riscv:rv32",
+                "set remotetimeout 10",
+                "set remote hardware-breakpoint-limit 2"
+            ]
+        },
+    ]
+}

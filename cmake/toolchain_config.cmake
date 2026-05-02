@@ -1,3 +1,4 @@
+# Set path toolchain
 set(TOOLCHAIN_PREFIX $ENV{MIK32_TOOLCHAIN_DIR}/riscv-none-elf)
 
 set(CMAKE_C_COMPILER            ${TOOLCHAIN_PREFIX}-gcc)
@@ -10,19 +11,17 @@ set(CMAKE_CXX_COMPILER_RANLIB   ${TOOLCHAIN_PREFIX}-ranlib)
 set(CMAKE_AR                    ${TOOLCHAIN_PREFIX}-ar)
 set(CMAKE_RANLIB                ${TOOLCHAIN_PREFIX}-ranlib)
 
+# Set compile flags
 string(CONCAT COMMON_FLAGS
     " -march=rv32imc_zicsr_zifencei"
     " -mabi=ilp32"
     " -mcmodel=medlow"
-    " -Os"
     " -g3"
+    " -Os"
     " -Wall"
-    " -fsigned-char"
-    " -ffunction-sections"
-    " -fdata-sections"
+    " -fsigned-char -ffunction-sections"
     " -DMIK32V2"
 )
-
 
 string(CONCAT C_FLAGS
     ${COMMON_FLAGS}
@@ -46,8 +45,9 @@ set(CMAKE_C_FLAGS_INIT   ${C_FLAGS})
 set(CMAKE_CPP_FLAGS_INIT ${CPP_FLAGS})
 set(CMAKE_ASM_FLAGS_INIT ${ASM_FLAGS})
 
+# Set linker flags
 string(CONCAT LINK_FLAGS
-    " -Wl,-Map,base_project.map"
+    " -Wl,-Map,YADRO_MULTI_CLOCK.map"
     " -Tram.ld"
     " -Xlinker --gc-sections"
     " -nostartfiles"
@@ -55,6 +55,8 @@ string(CONCAT LINK_FLAGS
 
 set(CMAKE_EXE_LINKER_FLAGS ${LINK_FLAGS})
 
+# Set executable suffix
 set(CMAKE_EXECUTABLE_SUFFIX_C ".elf")
 
+# Set "try compile target" type for generate build system
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)

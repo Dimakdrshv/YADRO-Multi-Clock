@@ -26,7 +26,7 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 flash:
-	python3 $(MIK32_UPLOADER_DIR)/mik32_upload.py build/app/base_project.hex --run-openocd \
+	python3 $(MIK32_UPLOADER_DIR)/mik32_upload.py build/app/YADRO_MULTI_CLOCK.hex --run-openocd \
 	--openocd-exec /usr/bin/openocd \
 	--openocd-target $(MIK32_UPLOADER_DIR)/openocd-scripts/target/mik32.cfg \
 	--openocd-interface $(MIK32_UPLOADER_DIR)/openocd-scripts/interface/ftdi/mikron-link.cfg \
@@ -36,4 +36,4 @@ monitor:
 	picocom $(SERIAL_PORT) -b $(SERIAL_BOUDRATE) --omap crcrlf --echo
 
 dump:
-	$(MIK32_TOOLCHAIN_DIR)/riscv-none-elf-objdump -d $(BUILD_DIR)/app/base_project.elf > dump
+	$(MIK32_TOOLCHAIN_DIR)/riscv-none-elf-objdump -d $(BUILD_DIR)/app/YADRO_MULTI_CLOCK.elf > dump

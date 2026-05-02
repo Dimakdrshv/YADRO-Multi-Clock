@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "MIK32",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "compilerPath": "${env:MIK32_TOOLCHAIN_DIR}/riscv-none-elf-gcc",
+            "intelliSenseMode": "linux-gcc-x86"
+        }
+    ],
+    "version": 4
+}

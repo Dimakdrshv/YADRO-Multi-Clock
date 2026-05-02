@@ -35,9 +35,11 @@
 			"extensions": [
 				"ms-vscode.cpptools-extension-pack",
 				"ms-vscode.makefile-tools",
-				"mcu-debug.debug-tracker-vscode",
+
+				"ms-vscode.cmake-tools",
+            	"twxs.cmake",
+
 				"mcu-debug.memory-view",
-				"mcu-debug.rtos-views",
 				"mcu-debug.peripheral-viewer",
 				"marus25.cortex-debug"
 			],

@@ -1,2 +1,78 @@
-# YADRO-Multi-Clock
-Multi-mode embedded clock system for MIK32 featuring RTC, UART command interface, LCD display, alarm functionality and temperature/humidity monitoring.
+# YADRO Multi Clock
+
+Многорежимные часы на базе микроконтроллера MIK32 Амур.
+
+---
+
+# Используемое оборудование
+
+## Микроконтроллер
+
+* MIK32 Амур
+
+## Периферия
+
+* RTC;
+* UART;
+* I2C;
+* Timer;
+* GPIO;
+
+## Внешние устройства
+
+* LCD 16x2 с I2C-интерфейсом;
+* датчик температуры и влажности DHT11;
+* buzzer.
+
+---
+
+# Поддерживаемые UART-команды
+
+| Команда         | Назначение                   |
+| ----------------|------------------------------|
+| SET_TIME        | установка времени            |
+| SET_DATE        | установка даты               |
+| SHOW_TEMP       | получение температуры        |
+| SHOW_HUM        | получение влажности          |
+| SET_ALARM_TIME  | установка времени будильника |
+| SHOW_ALARM_TIME | получение времени будильника |
+| ALARM_ON        | включение будильника         |
+| ALARM_OFF       | выключение будильника        |
+| DISPLAY_ON      | включение дисплея            |
+| DISPLAY_OFF     | выключение дисплея           |
+
+---
+
+# Система сборки
+
+Проект использует:
+
+* CMake;
+* GCC для RISC-V;
+* Git Submodules для внешних зависимостей.
+
+---
+
+# Сборка проекта
+
+## Клонирование репозитория
+
+```bash
+git clone <repository_url>
+```
+
+## Сборка
+
+```bash
+mkdir build
+cd build
+
+cmake ..
+make
+```
+
+---
+
+# Лицензия
+
+Проект распространяется под лицензией MIT.

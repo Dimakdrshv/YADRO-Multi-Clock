@@ -8,7 +8,9 @@
 #include "mtimer.h"
 
 void System_init(void) {
-    Clock_init();
+    if (Clock_init() != CLOCK_INIT_STATUS_OK) {
+        while(1);
+    }
     MTIMER_init();
     PAD_init();
     EPIC_IRQ_init();

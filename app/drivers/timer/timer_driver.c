@@ -32,7 +32,6 @@ static void TIMER_set_control(void) {
 }
 
 static void TIMER_overflow_interrupt_enable(void) {
-    TIMER32_1_BASE->INT_MASK = 0u;
     TIMER32_1_BASE->INT_CLEAR = TIMER32_INT_OVERFLOW_M;;
     TIMER32_1_BASE->INT_MASK = TIMER32_INT_OVERFLOW_M;
 }

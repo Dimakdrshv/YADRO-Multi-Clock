@@ -11,6 +11,7 @@
 #define SCREEN_SHOW_STARTUP_M (1u << 0u)
 #define SCREEN_SHOW_ALARM_M   (1u << 1u)
 #define SCREEN_SHOW_TH_M      (1u << 2u)
+#define SCREEN_SHOW_ALL       (SCREEN_SHOW_STARTUP_M | SCREEN_SHOW_ALARM_M | SCREEN_SHOW_TH_M)
 
 #define STARTUP_SCREEN_TIMING (3u)
 #define ALARM_SCREEN_TIMING   (7u)
@@ -20,12 +21,13 @@
 static uint32_t app_flags = SCREEN_SHOW_STARTUP_M;
 static uint32_t show_timing = STARTUP_SCREEN_TIMING;
 
-static void App_Controller_SetAppFlag(uint32_t flag) {
-    app_flags |= flag;
-}
-
 static void App_Controller_ClearAppFlag(uint32_t flag) {
     app_flags &= ~flag;
+}
+
+static void App_Controller_SetAppFlag(uint32_t flag) {
+    App_Controller_ClearAppFlag(SCREEN_SHOW_ALL); 
+    app_flags |= flag;
 }
 
 static void App_Controller_CheckTiming(uint32_t flag) {
@@ -74,22 +76,22 @@ static void App_Controller_ShowStartup(void) {
 
 static void App_Controller_HandleIRQEvents(uint32_t irq_events) {
     if (irq_events & APP_EVENT_RTC_IS_ALARM_M) {
-        app_flags |= SCREEN_SHOW_ALARM_M;
+        App_Controller_SetAppFlag(SCREEN_SHOW_ALARM_M);
         show_timing = UINT32_MAX;
         LCD_Service_Clear();
         BUZZER_Service_SetHigh();
     }
     
     if (irq_events & APP_EVENT_TIMER32_1_IS_OVERFLOW_M) {
-        if (app_flags & SCREEN_SHOW_ALARM_M) {
+        if ((app_flags & SCREEN_SHOW_ALARM_M)) {
             App_Controller_ShowAlarm();
             App_Controller_CheckTiming(SCREEN_SHOW_ALARM_M);
         }
-        else if (app_flags & SCREEN_SHOW_TH_M) {
+        else if ((app_flags & SCREEN_SHOW_TH_M)) {
             App_Controller_ShowTemperatureHumidity();
             App_Controller_CheckTiming(SCREEN_SHOW_TH_M);
         }
-        else if (app_flags & SCREEN_SHOW_STARTUP_M) {
+        else if ((app_flags & SCREEN_SHOW_STARTUP_M)) {
             App_Controller_ShowStartup();
             App_Controller_CheckTiming(SCREEN_SHOW_STARTUP_M);
         }
@@ -182,10 +184,10 @@ static void  App_Controller_HandleCommands(uint32_t commands) {
     }
     else if (commands & APP_COMMAND_ALARMOFF_M) {
         App_Controller_ClearAppFlag(SCREEN_SHOW_ALARM_M);
-        RTC_Service_DisableAlarm();
         BUZZER_Service_SetLow();
         LCD_Service_Clear();
         show_timing = ZERO_SCREEN_TIMING;
+        RTC_Service_DisableAlarm();
     }
     else if (commands & APP_COMMAND_SHOWTH_M) {
         App_Controller_SetAppFlag(SCREEN_SHOW_TH_M);

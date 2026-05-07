@@ -48,7 +48,7 @@ set(CMAKE_ASM_FLAGS_INIT ${ASM_FLAGS})
 # Set linker flags
 string(CONCAT LINK_FLAGS
     " -Wl,-Map,YADRO_MULTI_CLOCK.map"
-    " -Tram.ld"
+    " -Teeprom.ld"
     " -Xlinker --gc-sections"
     " -nostartfiles"
 )

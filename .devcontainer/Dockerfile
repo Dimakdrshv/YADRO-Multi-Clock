@@ -46,3 +46,9 @@ RUN git clone https://github.com/MikronMIK32/mik32-uploader.git
 # Config git for ignore file mode and line endings (otherwise there will be a lot of false changes in the files)
 RUN git config --global core.filemode false && \
     git config --global core.autocrlf true
+
+# Ceedling
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ruby ruby-dev build-essential
+
+RUN gem install ceedling
